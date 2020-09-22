@@ -2,16 +2,13 @@ const HorarioDisponivel = require("../models/HorarioDisponivel");
 const Aula = require("../models/Aula");
 
 module.exports = {
-  async index(req, res) {
-    const { id_aula } = req.params;
-
-    const aula = await Aula.findByPk(id_aula, {
+  async getAll(req, res) {
+    const horarios = await HorarioDisponivel.findAll({
       include: {
-        association: "horarios",
+        association: "aulas",
       },
     });
-
-    return res.json(aula);
+    return res.json(horarios);
   },
   async store(req, res) {
     const { id_aula } = req.params;
@@ -32,16 +29,21 @@ module.exports = {
   },
 
   async delete(req, res) {
-    // const { user_id } = req.params;
-    // const { name } = req.body;
-    // const user = await User.findByPk(user_id);
-    // if (!user) {
-    //   return res.status(400).json({ error: "Uuser not found!" });
-    // }
-    // const tech = await Tech.findOne({
-    //   where: { name },
-    // });
-    // await user.removeTech(tech);
-    // return res.json();
+    const { id_aula, id_horario } = req.params;
+
+    const aula = await Aula.findByPk(id_aula);
+
+    if (!aula) {
+      return res.status(400).json({ error: "Aula não encontrada!" });
+    }
+    const horario = await HorarioDisponivel.findByPk(id_horario);
+
+    if (!horario) {
+      return res.status(400).json({ error: "Horario não encontrado!" });
+    }
+
+    await aula.removeHorario(horario);
+
+    return res.json("Horario removido com sucesso!");
   },
 };

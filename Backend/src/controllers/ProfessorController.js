@@ -5,17 +5,26 @@ const Usuario = require("../models/Usuario");
 module.exports = {
   async index(req, res) {
     const { id_professor } = req.params;
+
     const professor = await Professor.findByPk(id_professor, {
       include: {
         association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
       },
     });
 
+    if (!professor) {
+      return res.status(400).json({ error: "Professor não encontrado!" });
+    }
+
     return res.json(professor);
   },
 
   async getAll(req, res) {
-    const professores = await Professor.findAll();
+    const professores = await Professor.findAll({
+      include: {
+        association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
+      },
+    });
     return res.json(professores);
   },
 
@@ -50,6 +59,7 @@ module.exports = {
 
   async update(req, res) {
     const { id_professor } = req.params;
+
     const {
       nome,
       email,
@@ -59,26 +69,28 @@ module.exports = {
       nome_usuario,
       senha,
     } = req.body;
+
     const professor = await Professor.findByPk(id_professor);
+
+    if (!professor) {
+      return res.status(400).json({ error: "Professor não encontrado!" });
+    }
+
     const usuario = await Usuario.findByPk(professor.id_usuario);
     const pessoa = await Pessoa.findByPk(professor.id_pessoa);
-    usuario.nome_usuario = nome_usuario;
-    usuario.senha = senha;
 
-    pessoa.nome = nome;
-    pessoa.email = email;
-    pessoa.data_nascimento = data_nascimento;
-    pessoa.descricao = descricao;
-    pessoa.formacao = formacao;
-
-    pessoa.save();
-    usuario.save();
+    usuario.update({ nome_usuario, senha });
+    pessoa.update({ nome, email, data_nascimento, descricao, formacao });
 
     return res.json(professor);
   },
   async delete(req, res) {
     const { id_professor } = req.params;
     const professor = await Professor.findByPk(id_professor);
+
+    if (!professor) {
+      return res.status(400).json({ error: "Professor não encontrado!" });
+    }
 
     professor.destroy();
 

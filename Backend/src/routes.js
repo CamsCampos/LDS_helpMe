@@ -14,14 +14,22 @@ routes.get("/", (req, res) => {
   res.json({ teste: "Ok" });
 });
 
-routes.post("/pessoas", PessoaController.store);
-routes.get("/pessoas", PessoaController.index);
+// Rotas de pessoas: inutilizavel já que pessoa é criado por meio da rota de professor/ aluno
+// routes.post("/pessoas", PessoaController.store);
+// routes.get("/pessoas", PessoaController.index);
+
+//Rotas de horarios disponíveis
+routes.get("/horarios", HorarioController.getAll);
+routes.post("/horarios/:id_aula", HorarioController.store);
+routes.delete("/horarios/:id_aula/:id_horario", HorarioController.delete);
+//Update de horário não existirá. Exclua e crie outro
 
 //Rotas de aulas
-routes.get("/aulas", AulaController.index);
+routes.get("/aulas/:id_aula", AulaController.index);
+routes.get("/aulas", AulaController.getAll);
 routes.post("/aulas/:id_professor", AulaController.store);
+routes.put("/aulas/:id_aula", AulaController.update);
 // routes.delete("/aulas/:id_aula", AulaController.delete); //TODO
-// routes.put("/aulas/:id_professor", AulaController.update); // TODO
 
 // Rotas de professores
 routes.get("/professores/:id_professor", ProfessorController.index);

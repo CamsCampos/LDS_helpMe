@@ -26,6 +26,4 @@ HorarioDisponivel.associate(connection.models);
 Usuario.associate(connection.models);
 Permissao.associate(connection.models);
 
-// Pessoa.associate(connection.models);
-
 module.exports = connection;
