@@ -7,6 +7,7 @@ const Aula = require("../models/Aula");
 const HorarioDisponivel = require("../models/HorarioDisponivel");
 const Usuario = require("../models/Usuario");
 const Permissao = require("../models/Permissao");
+const Aluno = require("../models/Aluno");
 
 const connection = new Sequelize(dbConfig);
 
@@ -17,6 +18,7 @@ Aula.init(connection);
 HorarioDisponivel.init(connection);
 Usuario.init(connection);
 Permissao.init(connection);
+Aluno.init(connection);
 
 //My association
 Pessoa.associate(connection.models);
@@ -25,5 +27,6 @@ Aula.associate(connection.models);
 HorarioDisponivel.associate(connection.models);
 Usuario.associate(connection.models);
 Permissao.associate(connection.models);
+Aluno.associate(connection.models);
 
 module.exports = connection;

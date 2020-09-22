@@ -21,6 +21,10 @@ class Pessoa extends Model {
       foreignKey: "id_pessoa",
       as: "professor",
     });
+    this.hasOne(models.Aluno, {
+      foreignKey: "id_pessoa",
+      as: "aluno",
+    });
   }
 }
 

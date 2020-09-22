@@ -7,6 +7,7 @@ const AulaController = require("./controllers/AulaController");
 const HorarioController = require("./controllers/HorarioController");
 const UsuarioController = require("./controllers/UsuarioController");
 const PermissaoController = require("./controllers/PermissaoController");
+const AlunoController = require("./controllers/AlunoController");
 
 const routes = express.Router();
 
@@ -37,6 +38,13 @@ routes.get("/professores", ProfessorController.getAll);
 routes.post("/professores", ProfessorController.store);
 routes.put("/professores/:id_professor", ProfessorController.update);
 routes.delete("/professores/:id_professor", ProfessorController.delete);
+
+// Rotas de alunos
+routes.get("/alunos/:id_aluno", AlunoController.index);
+routes.get("/alunos", AlunoController.getAll);
+routes.post("/alunos", AlunoController.store);
+routes.put("/alunos/:id_aluno", AlunoController.update);
+routes.delete("/alunos/:id_aluno", AlunoController.delete);
 
 //Rota de permissão para login
 routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
