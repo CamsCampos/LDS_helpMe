@@ -18,7 +18,7 @@ class HorarioDisponivel extends Model {
     this.belongsToMany(models.Aula, {
       foreignKey: "id_horario",
       through: "aula_horarios",
-      as: "Aula", //tava plural
+      as: "aulas",
     });
   }
 }
