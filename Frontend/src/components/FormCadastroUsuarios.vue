@@ -1,5 +1,8 @@
+
+
 <template>
-  <div id="app">
+
+  <div id="app"  class="grad" >
     <div class="container cabecalho-cadastro">
       <h1>Cadastre-se</h1>
     </div>
@@ -82,10 +85,8 @@
               size="sm"
               class="mt-3"
             ></b-form-select>
-            <div class="mt-3">
-              Selected:
-              <strong>{{ dropDownScholarity }}</strong>
-            </div>
+           
+         
           </div>
         </div>
 
@@ -101,11 +102,12 @@
               disabled-field="notEnabled"
             ></b-form-radio-group>
           </b-form-group>
-
+<!--
           <div class="mt-3">
-            Selected radio:
-            <strong>{{ radioRegisterType }}</strong>
+           Selected radio:
+           <strong>{{ radioRegisterType }}</strong>
           </div>
+-->
         </div>
       </fieldset>
 
@@ -128,6 +130,7 @@
       </div>
     </form>
   </div>
+
 </template>
 
 <script>
@@ -177,5 +180,13 @@ export default {
 
 .espaco {
   margin-top: 40px;
+}
+
+.grad {
+  background: linear-gradient(to bottom, #031d44 0%, #025f53 100%);
+}
+
+h1 {
+  color: white;
 }
 </style>
