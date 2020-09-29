@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const dbConfig = require("../config/database");
-
 const Pessoa = require("../models/Pessoa");
 const Professor = require("../models/Professor");
 const Aula = require("../models/Aula");
@@ -28,5 +27,22 @@ HorarioDisponivel.associate(connection.models);
 Usuario.associate(connection.models);
 Permissao.associate(connection.models);
 Aluno.associate(connection.models);
+
+// Permissao.sync({ force: true }).then(() => {
+//   console.log("Drop and Resync Db");
+//   initial();
+// });
+
+// function initial() {
+//   Permissao.create({
+//     id: 1,
+//     nome: "professor",
+//   });
+
+//   Permissao.create({
+//     id: 2,
+//     nome: "aluno",
+//   });
+// }
 
 module.exports = connection;
