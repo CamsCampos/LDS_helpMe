@@ -1,37 +1,30 @@
 <template>
   <div id="app">
-    <Header />
-    <Body class="teste" />
+    <nav class="nav">
+      <h1>Rotas com VueRouter</h1>
+      <Menu />
+    </nav>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import Body from "./components/Body.vue";
-
+import Menu from "./components/templates/Menu";
 export default {
-  name: "App",
-  components: {
-    Header,
-    Body,
-  },
+  components: { Menu },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
 #app {
   font-family: Poppins, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
-  /* margin-top: 60px; */
 }
 
-.teste {
-  position: relative;
-  /* left: 100px; */
-  top: -10rem;
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
