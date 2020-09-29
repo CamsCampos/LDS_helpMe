@@ -15,10 +15,6 @@ routes.get("/", (req, res) => {
   res.json({ teste: "Ok" });
 });
 
-// Rotas de pessoas: inutilizavel já que pessoa é criado por meio da rota de professor/ aluno
-// routes.post("/pessoas", PessoaController.store);
-// routes.get("/pessoas", PessoaController.index);
-
 //Rotas de horarios disponíveis
 routes.get("/horarios", HorarioController.getAll);
 routes.post("/horarios/:id_aula", HorarioController.store);

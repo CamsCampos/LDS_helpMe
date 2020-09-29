@@ -13,11 +13,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: "usuarios", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       id_permissao: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: "permissoes", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       created_at: {
         type: Sequelize.DATE,

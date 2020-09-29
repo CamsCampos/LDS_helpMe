@@ -12,16 +12,12 @@ module.exports = {
       id_pessoa: {
         type: Sequelize.INTEGER,
         allowNull: false,
-
-        // TODO: Verificar utilidade
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
       id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: true,
-
-        // TODO: Verificar utilidade
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },

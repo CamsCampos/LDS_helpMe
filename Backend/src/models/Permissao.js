@@ -15,11 +15,11 @@ class Permissao extends Model {
 
   static associate(models) {
     this.belongsToMany(models.Usuario, {
-      through: "usuarios_permissoes",
       foreignKey: "id_permissao",
+      through: "usuarios_permissoes",
       as: "usuarios",
-      onDelete: "CASCADE",
-      hooks: true,
+      // onDelete: "SET NULL",
+      // // hooks: true,
     });
   }
 }

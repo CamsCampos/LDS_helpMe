@@ -23,11 +23,11 @@ class Usuario extends Model {
       as: "aluno",
     });
     this.belongsToMany(models.Permissao, {
-      through: "usuarios_permissoes",
       foreignKey: "id_usuario",
+      through: "usuarios_permissoes",
       as: "permissoes",
-      onDelete: "CASCADE",
-      hooks: true,
+      // onDelete: "CASCADE",
+      // hooks: true,
     });
   }
 }
