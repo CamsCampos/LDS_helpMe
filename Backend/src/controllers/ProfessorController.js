@@ -1,15 +1,13 @@
 const Pessoa = require("../models/Pessoa");
 const Professor = require("../models/Professor");
 const Usuario = require("../models/Usuario");
-
+const Permissao = require("../models/Permissao");
 module.exports = {
   async index(req, res) {
     const { id_professor } = req.params;
 
     const professor = await Professor.findByPk(id_professor, {
-      include: {
-        association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
-      },
+      include: { all: true },
     });
 
     if (!professor) {
@@ -22,7 +20,7 @@ module.exports = {
   async getAll(req, res) {
     const professores = await Professor.findAll({
       include: {
-        association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
+        all: true,
       },
     });
     return res.json(professores);
@@ -54,6 +52,11 @@ module.exports = {
       id_usuario: usuario.id,
     });
 
+    const [permissao] = await Permissao.findOrCreate({
+      where: { nome: "professor" },
+    });
+
+    await usuario.addPermissoes(permissao);
     return res.json(professor);
   },
 

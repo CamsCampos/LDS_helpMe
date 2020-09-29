@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require("sequelize");
-const Usuario = require("./Usuario");
 
 class Permissao extends Model {
   static init(sequelize) {
@@ -9,6 +8,7 @@ class Permissao extends Model {
       },
       {
         sequelize,
+        tableName: "permissoes",
       }
     );
   }
@@ -17,6 +17,9 @@ class Permissao extends Model {
     this.belongsToMany(models.Usuario, {
       through: "usuarios_permissoes",
       foreignKey: "id_permissao",
+      as: "usuarios",
+      onDelete: "CASCADE",
+      hooks: true,
     });
   }
 }

@@ -1,6 +1,7 @@
 const Pessoa = require("../models/Pessoa");
 const Aluno = require("../models/Aluno");
 const Usuario = require("../models/Usuario");
+const Permissao = require("../models/Permissao");
 
 module.exports = {
   async index(req, res) {
@@ -49,6 +50,13 @@ module.exports = {
     });
 
     const usuario = await Usuario.create({ nome_usuario, senha });
+
+    const [permissao] = await Permissao.findOrCreate({
+      where: { nome: "aluno" },
+    });
+
+    await usuario.addPermissoes(permissao);
+
     const aluno = await Aluno.create({
       id_pessoa: pessoa.id,
       id_usuario: usuario.id,

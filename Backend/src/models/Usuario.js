@@ -26,6 +26,8 @@ class Usuario extends Model {
       through: "usuarios_permissoes",
       foreignKey: "id_usuario",
       as: "permissoes",
+      onDelete: "CASCADE",
+      hooks: true,
     });
   }
 }
