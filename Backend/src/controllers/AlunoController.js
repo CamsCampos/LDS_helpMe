@@ -1,31 +1,31 @@
 const Pessoa = require("../models/Pessoa");
-const Professor = require("../models/Professor");
+const Aluno = require("../models/Aluno");
 const Usuario = require("../models/Usuario");
 
 module.exports = {
   async index(req, res) {
-    const { id_professor } = req.params;
+    const { id_aluno } = req.params;
 
-    const professor = await Professor.findByPk(id_professor, {
+    const aluno = await Aluno.findByPk(id_aluno, {
       include: {
         association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
       },
     });
 
-    if (!professor) {
-      return res.status(400).json({ error: "Professor não encontrado!" });
+    if (!aluno) {
+      return res.status(400).json({ error: "Aluno não encontrado!" });
     }
 
-    return res.json(professor);
+    return res.json(aluno);
   },
 
   async getAll(req, res) {
-    const professores = await Professor.findAll({
+    const alunos = await Aluno.findAll({
       include: {
         association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
       },
     });
-    return res.json(professores);
+    return res.json(alunos);
   },
 
   // TODO: Não permitir a criação de pessoa ou usuário caso dê algum erro subsequente
@@ -49,16 +49,16 @@ module.exports = {
     });
 
     const usuario = await Usuario.create({ nome_usuario, senha });
-    const professor = await Professor.create({
+    const aluno = await Aluno.create({
       id_pessoa: pessoa.id,
       id_usuario: usuario.id,
     });
 
-    return res.json(professor);
+    return res.json(aluno);
   },
 
   async update(req, res) {
-    const { id_professor } = req.params;
+    const { id_aluno } = req.params;
 
     const {
       nome,
@@ -70,29 +70,29 @@ module.exports = {
       senha,
     } = req.body;
 
-    const professor = await Professor.findByPk(id_professor);
+    const aluno = await Aluno.findByPk(id_aluno);
 
-    if (!professor) {
-      return res.status(400).json({ error: "Professor não encontrado!" });
+    if (!aluno) {
+      return res.status(400).json({ error: "Aluno não encontrado!" });
     }
 
-    const usuario = await Usuario.findByPk(professor.id_usuario);
-    const pessoa = await Pessoa.findByPk(professor.id_pessoa);
+    const usuario = await Usuario.findByPk(aluno.id_usuario);
+    const pessoa = await Pessoa.findByPk(aluno.id_pessoa);
 
     usuario.update({ nome_usuario, senha });
     pessoa.update({ nome, email, data_nascimento, descricao, formacao });
 
-    return res.json(professor);
+    return res.json(aluno);
   },
   async delete(req, res) {
-    const { id_professor } = req.params;
-    const professor = await Professor.findByPk(id_professor);
+    const { id_aluno } = req.params;
+    const aluno = await Aluno.findByPk(id_aluno);
 
-    if (!professor) {
-      return res.status(400).json({ error: "Professor não encontrado!" });
+    if (!aluno) {
+      return res.status(400).json({ error: "Aluno não encontrado!" });
     }
 
-    professor.destroy();
+    aluno.destroy();
 
     return res.json("Exclusão realizada com sucesso!");
   },
