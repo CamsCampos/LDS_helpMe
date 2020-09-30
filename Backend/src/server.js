@@ -1,19 +1,21 @@
 const express = require("express");
+const cors = require("cors");
 const routes = require("./routes");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 
 require("./database");
 
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081",
+  origin: "http://localhost:8080",
+  optionsSuccessStatus: 200,
 };
 
 app.use(express.json());
-app.use(routes);
+app.use(cors());
 app.use(cors(corsOptions));
+app.use(routes);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
