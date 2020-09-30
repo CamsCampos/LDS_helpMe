@@ -4,7 +4,12 @@ class HorarioDisponivel extends Model {
   static init(sequelize) {
     super.init(
       {
-        dia: DataTypes.DATEONLY,
+        dia: {
+          type: DataTypes.DATEONLY,
+          validade: {
+            isBefore: new Date(Date()), //Testar
+          },
+        },
         horario_inicio: DataTypes.TIME,
         horario_fim: DataTypes.TIME,
       },
