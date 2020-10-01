@@ -1,6 +1,6 @@
 const HorarioDisponivel = require("../models/HorarioDisponivel");
 const Aula = require("../models/Aula");
-
+const { Op } = require("sequelize");
 module.exports = {
   async getAll(req, res) {
     const horarios = await HorarioDisponivel.findAll({
@@ -19,6 +19,53 @@ module.exports = {
     if (!aula) {
       return res.status(400).json({ error: "Aula não encontrada!" });
     }
+
+    const aulasColididas = await Aula.findAll({
+      include: [
+        {
+          association: "horarios",
+          // Busca horários que colidem com o horario que foi informado
+          where: {
+            dia: dia,
+            [Op.or]: [
+              {
+                horario_inicio: {
+                  [Op.lte]: horario_inicio,
+                },
+                horario_fim: {
+                  [Op.gte]: horario_inicio,
+                },
+              },
+              {
+                horario_inicio: {
+                  [Op.lte]: horario_fim,
+                },
+                horario_fim: {
+                  [Op.gte]: horario_fim,
+                },
+              },
+              {
+                horario_inicio: {
+                  [Op.between]: [horario_inicio, horario_fim],
+                },
+              },
+              {
+                horario_fim: {
+                  [Op.between]: [horario_inicio, horario_fim],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+    if (aulasColididas.length > 0) {
+      return res.status(400).json({
+        error: "Horário de aula coincide com outras aulas do mesmo professor",
+      });
+    }
+
     const [horario] = await HorarioDisponivel.findOrCreate({
       where: { dia, horario_inicio, horario_fim },
     });

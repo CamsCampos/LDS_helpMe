@@ -12,6 +12,7 @@ module.exports = {
       nome_usuario: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
       },
       senha: {
         type: Sequelize.STRING,
