@@ -16,10 +16,12 @@ module.exports = {
 
     return res.json(aula);
   },
+
   async getAll(req, res) {
     const aulas = await Aula.findAll();
     return res.json(aulas);
   },
+
   async store(req, res) {
     const { id_professor } = req.params;
     const professor = await Professor.findByPk(id_professor);
