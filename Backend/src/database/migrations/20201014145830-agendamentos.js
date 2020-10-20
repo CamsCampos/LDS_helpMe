@@ -2,27 +2,31 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("aula_horarios", {
+    await queryInterface.createTable("agendamentos", {
       id: {
-        type: Sequelize.INTEGER,
         primaryKey: true,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
       },
-      ocupado: {
+      admitido: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
+        allowNull: true,
       },
-      id_aula: {
+      id_aluno: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "aulas", key: "id" },
+        references: { model: "alunos", key: "id" },
       },
-      id_horario: {
+      id_professor: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "horarios_disponiveis", key: "id" },
+        references: { model: "professores", key: "id" },
+      },
+      id_aula_horarios: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: "aula_horarios", key: "id" },
       },
       created_at: {
         type: Sequelize.DATE,
@@ -36,6 +40,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("aula_horarios");
+    await queryInterface.dropTable("agendamentos");
   },
 };

@@ -7,6 +7,8 @@ const HorarioDisponivel = require("../models/HorarioDisponivel");
 const Usuario = require("../models/Usuario");
 const Permissao = require("../models/Permissao");
 const Aluno = require("../models/Aluno");
+const AulaHorarios = require("../models/AulaHorarios");
+const Agendamento = require("../models/Agendamento");
 
 const connection = new Sequelize(dbConfig);
 
@@ -18,6 +20,8 @@ HorarioDisponivel.init(connection);
 Usuario.init(connection);
 Permissao.init(connection);
 Aluno.init(connection);
+AulaHorarios.init(connection);
+Agendamento.init(connection);
 
 //My association
 Pessoa.associate(connection.models);
@@ -27,6 +31,8 @@ HorarioDisponivel.associate(connection.models);
 Usuario.associate(connection.models);
 Permissao.associate(connection.models);
 Aluno.associate(connection.models);
+AulaHorarios.associate(connection.models);
+Agendamento.associate(connection.models);
 
 // Permissao.sync({ force: true }).then(() => {
 //   console.log("Drop and Resync Db");

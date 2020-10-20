@@ -7,7 +7,7 @@ class HorarioDisponivel extends Model {
         dia: {
           type: DataTypes.DATEONLY,
           validade: {
-            isBefore: new Date(Date()), //Testar
+            isBefore: new Date(Date()), // Testar
           },
         },
         horario_inicio: DataTypes.TIME,
@@ -22,7 +22,7 @@ class HorarioDisponivel extends Model {
   static associate(models) {
     this.belongsToMany(models.Aula, {
       foreignKey: "id_horario",
-      through: "aula_horarios",
+      through: "AulaHorarios",
       as: "aulas",
     });
   }

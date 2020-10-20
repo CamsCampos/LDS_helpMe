@@ -70,7 +70,12 @@ module.exports = {
       where: { dia, horario_inicio, horario_fim },
     });
 
+    // Cria o relacionamento entre aula e horário
     await aula.addHorario(horario);
+
+    // await aula.addHorario(horario, {
+    //   through: { ocupado: 1 },
+    // });
 
     return res.json(horario);
   },

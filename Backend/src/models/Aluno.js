@@ -24,6 +24,9 @@ class Aluno extends Model {
       onDelete: "CASCADE",
       hooks: true,
     });
+    this.hasMany(models.Agendamento, {
+      foreignKey: "id_aluno",
+    });
   }
 }
 

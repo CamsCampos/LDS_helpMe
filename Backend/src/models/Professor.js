@@ -27,6 +27,9 @@ class Professor extends Model {
     this.hasOne(models.Aula, {
       foreignKey: "id_professor",
     });
+    this.hasMany(models.Agendamento, {
+      foreignKey: "id_professor",
+    });
   }
 }
 

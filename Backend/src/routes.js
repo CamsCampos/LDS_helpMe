@@ -1,13 +1,14 @@
 const express = require("express");
 
 //Mine
-const PessoaController = require("./controllers/PessoaController");
+const aulaHorariosController = require("./controllers/AulaHorariosController");
 const ProfessorController = require("./controllers/ProfessorController");
 const AulaController = require("./controllers/AulaController");
 const HorarioController = require("./controllers/HorarioController");
 const UsuarioController = require("./controllers/UsuarioController");
 const PermissaoController = require("./controllers/PermissaoController");
 const AlunoController = require("./controllers/AlunoController");
+const AgendamentoController = require("./controllers/AgendamentoController");
 
 const routes = express.Router();
 
@@ -19,7 +20,10 @@ routes.get("/", (req, res) => {
 routes.get("/horarios", HorarioController.getAll);
 routes.post("/horarios/:id_aula", HorarioController.store);
 routes.delete("/horarios/:id_aula/:id_horario", HorarioController.delete);
-//Update de horário não existirá. Exclua e crie outro
+//Update de horário não existirá
+
+// Rotas da tabela de relacionamento aulaHorarios
+routes.get("/aulaHorarios", aulaHorariosController.get);
 
 //Rotas de aulas
 routes.get("/aulas/:id_aula", AulaController.index);
@@ -44,5 +48,9 @@ routes.delete("/alunos/:id_aluno", AlunoController.delete);
 
 //Rota de permissão para login
 routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
+
+// Rotas de agendamento
+routes.get("/agendamentos", AgendamentoController.index);
+routes.post("/agendamentos/alunos/:id_aluno", AgendamentoController.store);
 
 module.exports = routes;

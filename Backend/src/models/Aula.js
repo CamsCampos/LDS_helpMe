@@ -17,7 +17,7 @@ class Aula extends Model {
   static associate(models) {
     this.belongsToMany(models.HorarioDisponivel, {
       foreignKey: "id_aula",
-      through: "aula_horarios",
+      through: "AulaHorarios",
       as: "horarios",
       onDelete: "CASCADE",
       hooks: true,
