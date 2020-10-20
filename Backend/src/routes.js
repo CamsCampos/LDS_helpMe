@@ -52,5 +52,16 @@ routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
 // Rotas de agendamento
 routes.get("/agendamentos", AgendamentoController.index);
 routes.post("/agendamentos/alunos/:id_aluno", AgendamentoController.store);
-
+routes.put(
+  "/agendamentos/professores/:id_agendamento",
+  AgendamentoController.update
+);
+routes.delete(
+  "/agendamentos/alunos/:id_aluno/:id_agendamento",
+  AgendamentoController.deleteAluno
+);
+routes.delete(
+  "/agendamentos/professores/:id_aluno/:id_agendamento",
+  AgendamentoController.deleteProfessor
+);
 module.exports = routes;
