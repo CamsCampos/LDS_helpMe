@@ -10,6 +10,12 @@
       <router-link to="/cadastro-usuario" tag="li" active-class="active">
         <a>Cadastro de usuarios</a>
       </router-link>
+      <router-link to="/solicita-aula" tag="li" active-class="active">
+        <a>Solicitar aulas</a>
+      </router-link>
+      <router-link to="/card" tag="li" active-class="active">
+        <a>Card</a>
+      </router-link>
     </ul>
   </nav>
 </template>
@@ -18,5 +24,4 @@
 export default {};
 </script>
 
-<style>
-</style>
+<style></style>
