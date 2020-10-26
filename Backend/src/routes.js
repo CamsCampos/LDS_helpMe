@@ -16,22 +16,6 @@ routes.get("/", (req, res) => {
   res.json({ teste: "Ok" });
 });
 
-//Rotas de horarios disponíveis
-routes.get("/horarios", HorarioController.getAll);
-routes.post("/horarios/:id_aula", HorarioController.store);
-routes.delete("/horarios/:id_aula/:id_horario", HorarioController.delete);
-//Update de horário não existirá
-
-// Rotas da tabela de relacionamento aulaHorarios
-routes.get("/aulaHorarios", aulaHorariosController.get);
-
-//Rotas de aulas
-routes.get("/aulas/:id_aula", AulaController.index);
-routes.get("/aulas", AulaController.getAll);
-routes.post("/aulas/:id_professor", AulaController.store);
-routes.put("/aulas/:id_aula", AulaController.update);
-// routes.delete("/aulas/:id_aula", AulaController.delete); //TODO
-
 // Rotas de professores
 routes.get("/professores/:id_professor", ProfessorController.index);
 routes.get("/professores", ProfessorController.getAll);
@@ -46,11 +30,29 @@ routes.post("/alunos", AlunoController.store);
 routes.put("/alunos/:id_aluno", AlunoController.update);
 routes.delete("/alunos/:id_aluno", AlunoController.delete);
 
-//Rota de permissão para login
-routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
+//Rotas de aulas
+routes.get("/aulas/:id_aula", AulaController.index);
+routes.get("/aulas", AulaController.getAll);
+routes.post("/aulas/:id_professor", AulaController.store);
+routes.put("/aulas/:id_aula", AulaController.update);
+// routes.delete("/aulas/:id_aula", AulaController.delete); //TODO
+
+//Rotas de horarios disponíveis
+routes.get("/horarios", HorarioController.getAll);
+routes.post("/horarios/:id_aula", HorarioController.store);
+routes.delete("/horarios/:id_aula/:id_horario", HorarioController.delete);
+//Update de horário não existirá
+
+// Rotas do relacionamento aulaHorarios
+routes.get("/aulaHorarios", aulaHorariosController.get);
 
 // Rotas de agendamento
 routes.get("/agendamentos", AgendamentoController.index);
+routes.get("/agendamentos/alunos/:id_aluno", AgendamentoController.getAluno);
+routes.get(
+  "/agendamentos/professores/:id_professor",
+  AgendamentoController.getProfessor
+);
 routes.post("/agendamentos/alunos/:id_aluno", AgendamentoController.store);
 routes.put(
   "/agendamentos/professores/:id_agendamento",
@@ -61,7 +63,10 @@ routes.delete(
   AgendamentoController.deleteAluno
 );
 routes.delete(
-  "/agendamentos/professores/:id_aluno/:id_agendamento",
+  "/agendamentos/professores/:id_professor/:id_agendamento",
   AgendamentoController.deleteProfessor
 );
+
+//Rota de permissão para login
+routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
 module.exports = routes;

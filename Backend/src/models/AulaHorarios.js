@@ -22,6 +22,14 @@ class AulaHorarios extends Model {
     this.hasMany(models.Agendamento, {
       foreignKey: "id_aula_horarios",
     });
+    this.belongsTo(models.Aula, {
+      foreignKey: "id_aula",
+      as: "aula",
+    });
+    this.belongsTo(models.HorarioDisponivel, {
+      foreignKey: "id_horario",
+      as: "horario",
+    });
   }
 }
 

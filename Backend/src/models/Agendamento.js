@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const Professor = require("./Professor");
 
 class Agendamento extends Model {
   static init(sequelize) {
@@ -16,16 +17,18 @@ class Agendamento extends Model {
     );
   }
 
-  //FAZER ASSOCIAÇÃO COM ALUNO, PROFESSOR...
   static associate(models) {
     this.belongsTo(models.Aluno, {
       foreignKey: "id_aluno",
+      as: "aluno",
     });
     this.belongsTo(models.Professor, {
       foreignKey: "id_professor",
+      as: "professor",
     });
     this.belongsTo(models.AulaHorarios, {
       foreignKey: "id_aula_horarios",
+      as: "aula_horario",
     });
   }
 }

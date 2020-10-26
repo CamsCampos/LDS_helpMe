@@ -1,8 +1,10 @@
 const Agendamento = require("../models/Agendamento");
 const Aula = require("../models/Aula");
+const Horario = require("../models/HorarioDisponivel");
 const AulaHorarios = require("../models/AulaHorarios");
 const Professor = require("../models/Professor");
 const Aluno = require("../models/Aluno");
+const HorarioDisponivel = require("../models/HorarioDisponivel");
 
 module.exports = {
   async index(req, res) {
@@ -30,6 +32,94 @@ module.exports = {
     } else {
       agendamentos = await Agendamento.findAll();
     }
+    return res.json(agendamentos);
+  },
+  async getAluno(req, res) {
+    const { materia, data } = req.query;
+    const { id_aluno } = req.params;
+    let whereStatementAula = {};
+    let whereStatementHorario = {};
+
+    if (materia) whereStatementAula.materia = materia;
+    if (data) whereStatementHorario.dia = data;
+
+    let agendamentos = await Agendamento.findAll({
+      include: [
+        {
+          model: Professor,
+          as: "professor",
+          include: "pessoa",
+        },
+        {
+          model: Aluno,
+          as: "aluno",
+          include: "pessoa",
+        },
+        {
+          model: AulaHorarios,
+          as: "aula_horario",
+          include: [
+            {
+              model: Aula,
+              as: "aula",
+              where: whereStatementAula,
+            },
+            {
+              model: HorarioDisponivel,
+              as: "horario",
+              where: whereStatementHorario,
+            },
+          ],
+          required: true,
+        },
+      ],
+      where: { id_aluno: id_aluno, admitido: true },
+    });
+
+    return res.json(agendamentos);
+  },
+  async getProfessor(req, res) {
+    const { materia, data } = req.query;
+    const { id_professor } = req.params;
+    let whereStatementAula = {};
+    let whereStatementHorario = {};
+
+    if (materia) whereStatementAula.materia = materia;
+    if (data) whereStatementHorario.dia = data;
+
+    let agendamentos = await Agendamento.findAll({
+      include: [
+        {
+          model: Professor,
+          as: "professor",
+          include: "pessoa",
+        },
+        {
+          model: Aluno,
+          as: "aluno",
+          include: "pessoa",
+        },
+        {
+          model: AulaHorarios,
+          as: "aula_horario",
+          include: [
+            {
+              model: Aula,
+              as: "aula",
+              where: whereStatementAula,
+            },
+            {
+              model: HorarioDisponivel,
+              as: "horario",
+              where: whereStatementHorario,
+            },
+          ],
+          required: true,
+        },
+      ],
+      where: { id_professor: id_professor, admitido: true },
+    });
+
     return res.json(agendamentos);
   },
   async store(req, res) {
