@@ -6,8 +6,8 @@ import VueRouter from "vue-router";
 import Cadastro from "@/views/CadastroAula.vue";
 import CadastroUsuario from "@/views/CadastroUsuario.vue";
 import PaginaEmBranco from "@/components/templates/PaginaEmBranco";
-import SolicitaAula from "../components/SolicitarAulas";
-import Card from "../components/templates/Card";
+import SolicitaAula from "../views/SolicitarAulas";
+import Agenda from "../views/Agenda";
 
 // ##### Usar plugins de importações #####
 Vue.use(VueRouter);
@@ -33,8 +33,8 @@ export default new VueRouter({
       component: SolicitaAula,
     },
     {
-      path: "/Card",
-      component: Card,
+      path: "/agenda",
+      component: Agenda,
     },
   ],
 });

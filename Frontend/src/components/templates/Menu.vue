@@ -13,8 +13,8 @@
       <router-link to="/solicita-aula" tag="li" active-class="active">
         <a>Solicitar aulas</a>
       </router-link>
-      <router-link to="/card" tag="li" active-class="active">
-        <a>Card</a>
+      <router-link to="/agenda" tag="li" active-class="active">
+        <a>Agenda</a>
       </router-link>
     </ul>
   </nav>

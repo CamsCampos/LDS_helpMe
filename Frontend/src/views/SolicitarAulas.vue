@@ -51,7 +51,7 @@
           </b-form-group>
 
           <!-- Início da div separada para os cards -->
-          <div class="quadradoParaTirar text-center">
+          <div class="text-center">
             <br />
             <h2>Professores disponíveis</h2>
             <hr />
@@ -79,9 +79,7 @@
                       <b-col>Matéria: {{ selected }}</b-col>
                       <b-col>Valor: R${{ selected }}</b-col>
                     </b-row>
-                    <p class="lead espessuraFonte">
-                      Horários disponíveis
-                    </p>
+                    <p class="lead espessuraFonte">Horários disponíveis</p>
                     <b-table
                       class="corTabelaCard"
                       borderless
