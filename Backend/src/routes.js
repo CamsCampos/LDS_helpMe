@@ -16,14 +16,14 @@ routes.get("/", (req, res) => {
   res.json({ teste: "Ok" });
 });
 
-// Rotas de professores
+// Rotas de professores (OK)
 routes.get("/professores/:id_professor", ProfessorController.index);
 routes.get("/professores", ProfessorController.getAll);
 routes.post("/professores", ProfessorController.store);
 routes.put("/professores/:id_professor", ProfessorController.update);
 routes.delete("/professores/:id_professor", ProfessorController.delete);
 
-// Rotas de alunos
+// Rotas de alunos (OK)
 routes.get("/alunos/:id_aluno", AlunoController.index);
 routes.get("/alunos", AlunoController.getAll);
 routes.post("/alunos", AlunoController.store);

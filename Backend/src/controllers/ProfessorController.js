@@ -34,9 +34,20 @@ module.exports = {
 
   async getAll(req, res) {
     const professores = await Professor.findAll({
-      include: {
-        all: true,
-      },
+      include: [
+        {
+          model: Usuario,
+          as: "usuario",
+        },
+        {
+          model: Pessoa,
+          as: "pessoa",
+        },
+        {
+          model: Aula,
+          as: "aulas",
+        },
+      ],
     });
     return res.json(professores);
   },
