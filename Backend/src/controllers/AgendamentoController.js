@@ -162,6 +162,13 @@ module.exports = {
 
     agendamento.update({ admitido });
 
+    if (admitido) {
+      const aulaHorario = await AulaHorarios.findByPk(
+        agendamento.id_aula_horarios
+      );
+      aulaHorario.update({ ocupado: true });
+    }
+
     return res.json(admitido);
   },
   async deleteAluno(req, res) {
@@ -180,6 +187,12 @@ module.exports = {
         .status(401)
         .json({ error: "Agendamento não pertence a este aluno!" });
     }
+
+    // Desocupa a aula/horário
+    const aulaHorario = await AulaHorarios.findByPk(
+      agendamento.id_aula_horarios
+    );
+    aulaHorario.update({ ocupado: false });
 
     agendamento.destroy();
 
@@ -201,6 +214,12 @@ module.exports = {
         .status(401)
         .json({ error: "Agendamento não pertence a este professor!" });
     }
+
+    // Desocupa a aula/horário
+    const aulaHorario = await AulaHorarios.findByPk(
+      agendamento.id_aula_horarios
+    );
+    aulaHorario.update({ ocupado: false });
 
     agendamento.destroy();
 

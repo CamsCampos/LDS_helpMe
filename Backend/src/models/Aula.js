@@ -24,7 +24,7 @@ class Aula extends Model {
     });
     this.belongsTo(models.Professor, {
       foreignKey: "id_professor",
-      as: "Aulas",
+      as: "professor",
     });
   }
 }
