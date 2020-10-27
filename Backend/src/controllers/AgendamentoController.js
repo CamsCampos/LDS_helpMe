@@ -5,6 +5,7 @@ const AulaHorarios = require("../models/AulaHorarios");
 const Professor = require("../models/Professor");
 const Aluno = require("../models/Aluno");
 const HorarioDisponivel = require("../models/HorarioDisponivel");
+const { Op } = require("sequelize");
 
 module.exports = {
   async index(req, res) {
@@ -117,7 +118,17 @@ module.exports = {
           required: true,
         },
       ],
-      where: { id_professor: id_professor, admitido: true },
+      where: {
+        id_professor: id_professor,
+        [Op.or]: [
+          {
+            admitido: true,
+          },
+          {
+            admitido: null,
+          },
+        ],
+      },
     });
 
     return res.json(agendamentos);

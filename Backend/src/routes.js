@@ -37,13 +37,13 @@ routes.post("/aulas/:id_professor", AulaController.store);
 routes.put("/aulas/:id_aula", AulaController.update);
 // routes.delete("/aulas/:id_aula", AulaController.delete); //TODO
 
-//Rotas de horarios disponíveis
+//Rotas de horarios disponíveis (OK)
 routes.get("/horarios", HorarioController.getAll);
 routes.post("/horarios/:id_aula", HorarioController.store);
 routes.delete("/horarios/:id_aula/:id_horario", HorarioController.delete);
 //Update de horário não existirá
 
-// Rotas do relacionamento aulaHorarios
+// Rotas do relacionamento aulaHorarios (OK)
 routes.get("/aulaHorarios", aulaHorariosController.get);
 
 // Rotas de agendamento

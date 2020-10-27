@@ -4,9 +4,12 @@ const { Op } = require("sequelize");
 module.exports = {
   async getAll(req, res) {
     const horarios = await HorarioDisponivel.findAll({
-      include: {
-        association: "aulas",
-      },
+      include: [
+        {
+          model: Aula,
+          as: "aulas",
+        },
+      ],
     });
     return res.json(horarios);
   },
@@ -58,6 +61,9 @@ module.exports = {
           },
         },
       ],
+      where: {
+        id_professor: aula.id_professor,
+      },
     });
 
     if (aulasColididas.length > 0) {

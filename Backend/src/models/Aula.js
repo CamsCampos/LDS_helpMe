@@ -19,8 +19,8 @@ class Aula extends Model {
       foreignKey: "id_aula",
       through: "AulaHorarios",
       as: "horarios",
-      onDelete: "CASCADE",
-      hooks: true,
+      // onDelete: "CASCADE",
+      // hooks: true,
     });
     this.belongsTo(models.Professor, {
       foreignKey: "id_professor",
