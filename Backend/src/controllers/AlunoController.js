@@ -8,9 +8,16 @@ module.exports = {
     const { id_aluno } = req.params;
 
     const aluno = await Aluno.findByPk(id_aluno, {
-      include: {
-        association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
-      },
+      include: [
+        {
+          model: Usuario,
+          as: "usuario",
+        },
+        {
+          model: Pessoa,
+          as: "pessoa",
+        },
+      ],
     });
 
     if (!aluno) {
@@ -22,9 +29,16 @@ module.exports = {
 
   async getAll(req, res) {
     const alunos = await Aluno.findAll({
-      include: {
-        association: "pessoa", // TODO: buscar uma forma de associar "usuario" junto
-      },
+      include: [
+        {
+          model: Usuario,
+          as: "usuario",
+        },
+        {
+          model: Pessoa,
+          as: "pessoa",
+        },
+      ],
     });
     return res.json(alunos);
   },

@@ -2,12 +2,27 @@ const Pessoa = require("../models/Pessoa");
 const Professor = require("../models/Professor");
 const Usuario = require("../models/Usuario");
 const Permissao = require("../models/Permissao");
+const Aula = require("../models/Aula");
+
 module.exports = {
   async index(req, res) {
     const { id_professor } = req.params;
 
     const professor = await Professor.findByPk(id_professor, {
-      include: { all: true },
+      include: [
+        {
+          model: Usuario,
+          as: "usuario",
+        },
+        {
+          model: Pessoa,
+          as: "pessoa",
+        },
+        {
+          model: Aula,
+          as: "aulas",
+        },
+      ],
     });
 
     if (!professor) {

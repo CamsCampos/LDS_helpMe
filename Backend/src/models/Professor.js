@@ -24,8 +24,9 @@ class Professor extends Model {
       onDelete: "CASCADE",
       hooks: true,
     });
-    this.hasOne(models.Aula, {
+    this.hasMany(models.Aula, {
       foreignKey: "id_professor",
+      as: "aulas",
     });
     this.hasMany(models.Agendamento, {
       foreignKey: "id_professor",
