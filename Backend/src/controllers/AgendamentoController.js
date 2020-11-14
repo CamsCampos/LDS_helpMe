@@ -5,6 +5,7 @@ const AulaHorarios = require("../models/AulaHorarios");
 const Professor = require("../models/Professor");
 const Aluno = require("../models/Aluno");
 const HorarioDisponivel = require("../models/HorarioDisponivel");
+const Notificacao = require("../models/Notificacao");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -159,6 +160,14 @@ module.exports = {
       id_professor,
     });
 
+    await Notificacao.create({
+      id_usuario: professor.id_usuario,
+      visualizado: false,
+      id_aula_horario: id_aula_horarios,
+      tipo: "solicitacao_aula",
+      id_pessoa_remetente: aluno.id_pessoa,
+    });
+
     return res.json(agendamento);
   },
   async update(req, res) {
@@ -173,12 +182,27 @@ module.exports = {
 
     agendamento.update({ admitido });
 
+    const professor = await Professor.findByPk(agendamento.id_professor);
+    const aluno = await Aluno.findByPk(agendamento.id_aluno);
+
     if (admitido) {
       const aulaHorario = await AulaHorarios.findByPk(
         agendamento.id_aula_horarios
       );
       aulaHorario.update({ ocupado: true });
     }
+
+    const tipoNotificacao = admitido
+      ? "aceita_solicitacao"
+      : "recusa_solicitacao";
+
+    await Notificacao.create({
+      id_usuario: aluno.id_usuario,
+      visualizado: false,
+      id_aula_horario: agendamento.id_aula_horarios,
+      tipo: tipoNotificacao,
+      id_pessoa_remetente: professor.id_pessoa,
+    });
 
     return res.json(admitido);
   },
@@ -198,6 +222,16 @@ module.exports = {
         .status(401)
         .json({ error: "Agendamento não pertence a este aluno!" });
     }
+
+    const professor = await Professor.findByPk(agendamento.id_professor);
+
+    await Notificacao.create({
+      id_usuario: professor.id_usuario,
+      visualizado: false,
+      id_aula_horario: agendamento.id_aula_horarios,
+      tipo: "aluno_cancela_aula",
+      id_pessoa_remetente: aluno.id_pessoa,
+    });
 
     // Desocupa a aula/horário
     const aulaHorario = await AulaHorarios.findByPk(
@@ -225,6 +259,16 @@ module.exports = {
         .status(401)
         .json({ error: "Agendamento não pertence a este professor!" });
     }
+
+    const aluno = await Aluno.findByPk(agendamento.id_aluno);
+
+    await Notificacao.create({
+      id_usuario: aluno.id_usuario,
+      visualizado: false,
+      id_aula_horario: agendamento.id_aula_horarios,
+      tipo: "professor_cancela_aula",
+      id_pessoa_remetente: professor.id_pessoa,
+    });
 
     // Desocupa a aula/horário
     const aulaHorario = await AulaHorarios.findByPk(

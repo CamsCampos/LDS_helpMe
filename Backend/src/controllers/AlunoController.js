@@ -63,6 +63,14 @@ module.exports = {
       formacao,
     });
 
+    const usuarios = await Usuario.findOne({
+      where: { nome_usuario: nome_usuario },
+    });
+
+    if (usuarios) {
+      return res.status(422).json({ error: "Nome de usuário em uso" });
+    }
+
     const usuario = await Usuario.create({ nome_usuario, senha });
 
     const [permissao] = await Permissao.findOrCreate({
@@ -100,6 +108,14 @@ module.exports = {
 
     const usuario = await Usuario.findByPk(aluno.id_usuario);
     const pessoa = await Pessoa.findByPk(aluno.id_pessoa);
+
+    const usuarios = await Usuario.findOne({
+      where: { nome_usuario: nome_usuario },
+    });
+
+    if (usuarios) {
+      return res.status(422).json({ error: "Nome de usuário em uso" });
+    }
 
     usuario.update({ nome_usuario, senha });
     pessoa.update({ nome, email, data_nascimento, descricao, formacao });

@@ -9,6 +9,7 @@ const UsuarioController = require("./controllers/UsuarioController");
 const PermissaoController = require("./controllers/PermissaoController");
 const AlunoController = require("./controllers/AlunoController");
 const AgendamentoController = require("./controllers/AgendamentoController");
+const NotificacaoController = require("./controllers/NotificacaoController");
 
 const routes = express.Router();
 
@@ -66,6 +67,10 @@ routes.delete(
   "/agendamentos/professores/:id_professor/:id_agendamento",
   AgendamentoController.deleteProfessor
 );
+
+//Rotas de notificações)
+routes.get("/notificacoes", NotificacaoController.getAll);
+routes.get("/notificacoes/:id_usuario", NotificacaoController.index);
 
 //Rota de permissão para login
 routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
