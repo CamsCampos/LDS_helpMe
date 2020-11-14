@@ -6,7 +6,6 @@ const ProfessorController = require("./controllers/ProfessorController");
 const AulaController = require("./controllers/AulaController");
 const HorarioController = require("./controllers/HorarioController");
 const UsuarioController = require("./controllers/UsuarioController");
-const PermissaoController = require("./controllers/PermissaoController");
 const AlunoController = require("./controllers/AlunoController");
 const AgendamentoController = require("./controllers/AgendamentoController");
 const NotificacaoController = require("./controllers/NotificacaoController");
@@ -73,5 +72,6 @@ routes.get("/notificacoes", NotificacaoController.getAll);
 routes.get("/notificacoes/:id_usuario", NotificacaoController.index);
 
 //Rota de permissão para login
-routes.post("/usuario/:id_usuario/permissoes", PermissaoController.store);
+routes.get("/usuarios", UsuarioController.index);
+routes.post("/login", UsuarioController.post);
 module.exports = routes;
