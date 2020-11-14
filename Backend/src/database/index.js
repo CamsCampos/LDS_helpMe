@@ -10,6 +10,7 @@ const Aluno = require("../models/Aluno");
 const AulaHorarios = require("../models/AulaHorarios");
 const Agendamento = require("../models/Agendamento");
 const Notificacao = require("../models/Notificacao");
+const Mensagem = require("../models/Mensagem");
 
 const connection = new Sequelize(dbConfig);
 
@@ -24,6 +25,7 @@ Aluno.init(connection);
 AulaHorarios.init(connection);
 Agendamento.init(connection);
 Notificacao.init(connection);
+Mensagem.init(connection);
 
 //My association
 Pessoa.associate(connection.models);
@@ -36,6 +38,7 @@ Aluno.associate(connection.models);
 AulaHorarios.associate(connection.models);
 Agendamento.associate(connection.models);
 Notificacao.associate(connection.models);
+Mensagem.associate(connection.models);
 
 // Permissao.sync({ force: true }).then(() => {
 //   console.log("Drop and Resync Db");
