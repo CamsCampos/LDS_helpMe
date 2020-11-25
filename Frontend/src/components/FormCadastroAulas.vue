@@ -50,10 +50,7 @@
             <div class="p-2 w-50 bd-highlight">
               <h3>Horários disponíveis</h3>
             </div>
-            <div
-              @click="addMoreSchedules"
-              class="p-2 flex-shrink-0 bd-highlight moreSchedules"
-            >
+            <div class="p-2 flex-shrink-0 bd-highlight moreSchedules">
               + novo horário
             </div>
           </div>
@@ -104,12 +101,6 @@
           </div>
 
           <!-- TESTE de adicao de componente - Lucas data_do_teste -->
-          <component
-            v-for="(component, index) in components"
-            :key="index"
-            :is="component"
-          />
-
           <b-button
             class="registerButton"
             type="submit"
@@ -128,12 +119,12 @@ export default {
   data() {
     return {
       form: {
-        materia: "Geografia",
+        materia: null,
         checked: [],
-        custo_hora_aula: 25,
-        dia: "2020-10-01",
-        horario_inicio: "18:00",
-        horario_fim: "19:00",
+        custo_hora_aula: "",
+        dia: "",
+        horario_inicio: "",
+        horario_fim: "",
       },
       disciplinas: [
         { text: "Selecione", value: null },
@@ -141,9 +132,7 @@ export default {
         "Matemática",
         "História",
         "Geografia",
-        "Química",
-        "Física",
-        "Biologia",
+        "Ciência",
       ],
       show: true,
     };
@@ -151,25 +140,23 @@ export default {
   methods: {
     cadastrar() {
       // Cadastro da matéria
-      console.log("aula: ", this.form);
       this.$http
-        .post("/aulas/1", this.form)
-        .then((res) => {
-          console.log("Sucesso: " + res.data);
+        .post("/aulas/2", this.form)
+        .then((response) => {
+          console.log("Sucesso: " + response.data);
         })
-        .catch((err) => {
-          console.warn("Erro: " + err);
+        .catch((error) => {
+          console.warn("Erro: " + error);
         });
 
       // Cadastro do horário
-      console.log("aula: ", this.form);
       this.$http
         .post("/horarios/1", this.form)
-        .then((res) => {
-          console.log("Sucesso: " + res.data);
+        .then((response) => {
+          console.log("Sucesso: " + response.data);
         })
-        .catch((err) => {
-          console.warn("Erro: " + err);
+        .catch((error) => {
+          console.warn("Erro: " + error);
         });
     },
   },

@@ -27,6 +27,7 @@
                 id="example-datepicker"
                 v-model="dataExtenso"
                 class="mb-2"
+                placeholder="Selecione a data"
               ></b-form-datepicker>
               <p>Data selecionada: {{ dataExtenso }}</p>
             </b-col>
@@ -34,20 +35,24 @@
           <b-form-group label="Filtrar por:">
             <b-row>
               <b-col sm="3">
-                <b-form-radio v-model="filtro" name="some-radios" value="Menor"
+                <b-form-radio
+                  v-model="filtroRadial"
+                  name="some-radios"
+                  value="Menor"
                   >Menor valor</b-form-radio
                 >
               </b-col>
 
               <b-col sm="3">
-                <b-form-radio v-model="filtro" name="some-radios" value="Maior"
+                <b-form-radio
+                  v-model="filtroRadial"
+                  name="some-radios"
+                  value="Maior"
                   >Maior valor</b-form-radio
                 >
               </b-col>
             </b-row>
-            <p>
-              Filtragem: <strong>{{ filtro }}</strong>
-            </p>
+            <p>Filtragem: {{ filtroRadial }}</p>
           </b-form-group>
 
           <!-- Início da div separada para os cards -->
@@ -57,85 +62,69 @@
             <hr />
             <br />
             <!-- Cards -->
-            <b-card-group deck>
-              <b-card img-top class="cardRedondo">
-                <div class="testeCardPadding">
-                  <img
-                    class="teste"
-                    src="../../public/img/elipseFaceBackground.svg"
-                    alt=""
-                  />
-                  <b-img
-                    v-bind="mainProps"
-                    rounded="circle"
-                    src="https://placekitten.com/96/139"
-                    img-alt="Card image"
-                    class="imagemCard"
-                  ></b-img>
+            <b-row>
+              <b-col>
+                <b-card-group deck>
+                  <b-card
+                    img-top
+                    class="cardRedondo"
+                    v-for="(item, id) in aulaHorarios"
+                    :key="id"
+                    v-show="item.aula.materia == selected"
+                  >
+                    <div class="testeCardPadding">
+                      <img
+                        class="teste"
+                        src="../../public/img/elipseFaceBackground.svg"
+                        alt=""
+                      />
+                      <b-img
+                        rounded="circle"
+                        src="https://placekitten.com/96/139"
+                        img-alt="Card image"
+                        class="imagemCard"
+                      ></b-img>
 
-                  <h4>Prof1</h4>
-                  <b-card-text>
-                    <b-row class="text-left mt-3 mb-4">
-                      <b-col>Matéria: {{ selected }}</b-col>
-                      <b-col>Valor: R${{ selected }}</b-col>
-                    </b-row>
-                    <p class="lead espessuraFonte">Horários disponíveis</p>
-                    <b-table
-                      class="corTabelaCard"
-                      borderless
-                      :items="items"
-                      :fields="fields"
-                    ></b-table>
-                  </b-card-text>
-                  <b-button href="#" class="btnCor">Agendar</b-button>
-                </div>
-              </b-card>
+                      <h4>{{ item.aula.professor.pessoa.nome }}</h4>
+                      <b-card-text>
+                        <b-row class="text-left mt-3 mb-4 text-center">
+                          <b-col>
+                            <strong>Matéria: </strong>
+                            {{ item.aula.materia }}
+                          </b-col>
+                          <b-col>
+                            <strong>Valor: </strong>
+                            R${{ item.aula.custo_hora_aula }}
+                          </b-col>
+                        </b-row>
+                        <p class="lead espessuraFonte">
+                          <strong> Horários disponíveis</strong>
+                        </p>
 
-              <b-card
-                img-src="https://placekitten.com/1000/300"
-                img-alt="Card image"
-                img-top
-                class="cardRedondo"
-              >
-                <h4>Prof1</h4>
-                <b-card-text>
-                  <b-row class="text-left mt-3 mb-4">
-                    <b-col>Matéria: {{ selected }}</b-col>
-                    <b-col>Valor: R${{ selected }}</b-col>
-                  </b-row>
-                  <p class="lead espessuraFonte">Horários disponíveis</p>
-                  <b-table
-                    class="corTabelaCard"
-                    borderless
-                    :items="items"
-                    :fields="fields"
-                  ></b-table>
-                </b-card-text>
-                <b-button href="#" class="btnCor">Agendar</b-button>
-              </b-card>
-              <b-card
-                img-src="https://placekitten.com/1000/300"
-                img-alt="Card image"
-                img-top
-                class="cardRedondo"
-              >
-                <h4>Prof1</h4>
-                <b-card-text>
-                  <b-row class="text-left mt-3 mb-4">
-                    <b-col>Matéria: {{ selected }}</b-col>
-                    <b-col>Valor: R${{ selected }}</b-col>
-                  </b-row>
-                  <p class="lead espessuraFonte">Horários disponíveis</p>
-                  <b-table
-                    class="corTabelaCard"
-                    borderless
-                    :items="items"
-                    :fields="fields"
-                  ></b-table>
-                </b-card-text>
-                <b-button href="#" class="btnCor">Agendar</b-button>
-              </b-card>
-            </b-card-group>
+                        <table
+                          class="corTabelaCard tableCardResultRadius"
+                          style="width: 100%"
+                        >
+                          <tr class="th">
+                            <th class="strong">Data</th>
+                            <th class="strong">Horário início</th>
+                            <th class="strong">Horário fim</th>
+                          </tr>
+                          <tr>
+                            <td>{{ item.horario.dia }}</td>
+                            <td>{{ item.horario.horario_inicio }}</td>
+                            <td>{{ item.horario.horario_fim }}</td>
+                          </tr>
+                        </table>
+                      </b-card-text>
+                      <b-button href="#" class="btnCard" @click="agendarAula"
+                        >Agendar</b-button
+                      >
+                    </div>
+                  </b-card>
+                </b-card-group>
+              </b-col>
+            </b-row>
           </div>
           <!-- Fim da div dos cards -->
         </div>
@@ -150,32 +139,50 @@ export default {
     return {
       selected: null,
       options: [
-        { value: null, text: "Please select an option" },
-        { value: "1", text: "Português" },
-        { value: "2", text: "Matemática" },
-        { value: "3", text: "História" },
-        { value: "4", text: "Geografia" },
-        { value: "5", text: "Ciência" },
+        { value: null, text: "Selecione uma opção" },
+        { value: "Português", text: "Português" },
+        { value: "Matemática", text: "Matemática" },
+        { value: "História", text: "História" },
+        { value: "Geografia", text: "Geografia" },
+        { value: "Ciência", text: "Ciência" },
       ],
       dataExtenso: "",
-      filtro: "",
-      fields: [{ key: "data", label: "Data" }, "horario"],
-      items: [
-        { data: "07/09", horario: "10:00 as 11:00" },
-        { data: "09/09", horario: "17:30 as 18:30" },
-      ],
+      filtroRadial: "",
+      aulaHorarios: [],
     };
+  },
+  methods: {
+    getAulas() {},
+    agendarAula() {
+      this.$http
+        // *** Ficar atendo para mudar o id do aluno e o índice de aulaHorarios ***
+        .post(`/agendamentos/alunos/${3}`, {
+          id_aula_horarios: this.aulaHorarios[0].id,
+        })
+        .then((response) => {
+          console.log("Sucesso: " + response.data);
+        })
+        .catch((error) => {
+          console.warn("Erro: " + error);
+        });
+    },
+  },
+  computed: {
+    ordenarPorValor() {
+      return this.aulaHorarios.filter((a) => {
+        a.aula.custo_hora_aula % 2 === 0;
+      });
+    },
+  },
+  mounted() {
+    this.$http.get("/aulaHorarios").then((response) => {
+      this.aulaHorarios = response.data;
+    });
   },
 };
 </script>
 
 <style scoped>
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
-
 #cabecalho-degrade {
   background: linear-gradient(180deg, #031d44 25.52%, #025f53 100%);
   opacity: 0.9;
@@ -216,7 +223,7 @@ export default {
   font-weight: 500;
 }
 
-.btnCor {
+.btnCard {
   background: #025f53;
   width: 100%;
 }
@@ -261,5 +268,13 @@ export default {
 
 .testeCardPadding {
   padding: 0;
+}
+
+.th {
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.tableCardResultRadius {
+  border-radius: 4px;
 }
 </style>
