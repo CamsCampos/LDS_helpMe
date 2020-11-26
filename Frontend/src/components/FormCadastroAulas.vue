@@ -1,12 +1,19 @@
 <template>
   <div>
     <div class="container cabecalho-cadastro">
-      <h1>Cadastre sua aula</h1>
-      <p>Preencha os campos abaixo:</p>
+      <b-row align-v="center">
+        <b-col>
+          <h1>Cadastre sua aula</h1>
+          <p>Preencha os campos abaixo:</p>
+        </b-col>
+        <b-col cols="auto">
+          <b-button @click="toPerfil">Acessar perfil</b-button>
+        </b-col>
+      </b-row>
     </div>
 
     <form action="submit">
-      <fieldset class="container">
+      <fieldset class="container textoPreto">
         <h3>Sobre a aula</h3>
         <!-- Disciplina -->
         <div class="d-flex bd-highlight">
@@ -51,7 +58,7 @@
               <h3>Horários disponíveis</h3>
             </div>
             <div class="p-2 flex-shrink-0 bd-highlight moreSchedules">
-              + novo horário
+              <p>+ novo horário</p>
             </div>
           </div>
 
@@ -108,6 +115,7 @@
             @click.prevent="cadastrar"
             >Cadastrar</b-button
           >
+          <b-button @click.prevent="retornaIdUltimaAula">teste</b-button>
         </div>
       </fieldset>
     </form>
@@ -135,29 +143,49 @@ export default {
         "Ciência",
       ],
       show: true,
+      idUltimaAulaCadastrada: [],
+      recebe: "",
     };
   },
   methods: {
     cadastrar() {
       // Cadastro da matéria
       this.$http
-        .post("/aulas/2", this.form)
+        // atentar a troca de id do professor
+        .post(`/aulas/${localStorage.getItem("idUser")}`, this.form)
         .then((response) => {
-          console.log("Sucesso: " + response.data);
+          console.log("Aula cadastrada: " + response.data);
         })
         .catch((error) => {
           console.warn("Erro: " + error);
         });
 
-      // Cadastro do horário
-      this.$http
-        .post("/horarios/1", this.form)
-        .then((response) => {
-          console.log("Sucesso: " + response.data);
-        })
-        .catch((error) => {
-          console.warn("Erro: " + error);
+      // Trocar estes TimeOut para Promises
+      setTimeout(() => {
+        this.$http.get("/aulas").then((response) => {
+          this.idUltimaAulaCadastrada =
+            response.data[
+              Object.keys(response.data)[Object.keys(response.data).length - 1]
+            ];
         });
+      }, 1000);
+
+      // Cadastro do horário
+      setTimeout(() => {
+        this.$http
+          // atentar a troca de id da aula
+          .post(`/horarios/${this.idUltimaAulaCadastrada.id}`, this.form)
+          .then((response) => {
+            console.log("Horário cadastrado: " + response.data);
+          })
+          .catch((error) => {
+            console.warn("Erro: " + error);
+          });
+      }, 2000);
+    },
+    retornaIdUltimaAula() {},
+    toPerfil() {
+      this.$router.push("/perfil");
     },
   },
 };
@@ -174,8 +202,6 @@ fieldset {
   color: rgb(0, 0, 0);
 }
 
-/* .moreSchedules {} */
-
 .moreSchedules:hover {
   cursor: pointer;
 }
@@ -185,5 +211,9 @@ fieldset {
   background-color: #025f53;
   border: none;
   float: right;
+}
+
+.textoPreto {
+  color: black;
 }
 </style>

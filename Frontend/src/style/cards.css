@@ -1,0 +1,49 @@
+.btnCard {
+  background: #025f53;
+  width: 100%;
+}
+
+.cardRedondo {
+  border-radius: 10px;
+  padding: 0;
+}
+
+.corTabelaCard {
+  background: #efefef;
+}
+
+.tableCardResultRadius {
+  border-radius: 4px;
+}
+
+.espessuraFonte {
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.cardNoPadding {
+  padding: 0;
+  margin: 0;
+}
+
+.imagemCard {
+  position: relative;
+  width: 98px;
+  height: 102px;
+  top: -10px;
+}
+
+.posicaoElipse {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 90px;
+}
+
+.th {
+  border-bottom: 1px solid #d4d4d4;
+}

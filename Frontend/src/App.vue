@@ -2,7 +2,7 @@
   <div id="app">
     <router-view />
     <nav class="nav">
-      <h1>Rotas com VueRouter</h1>
+      <!-- <h1>Rotas com VueRouter</h1> -->
       <Menu />
     </nav>
   </div>
@@ -17,6 +17,7 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+@import "./style/general.css";
 #app {
   font-family: "Poppins", Helvetica, Arial, sans-serif;
 }

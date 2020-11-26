@@ -15,9 +15,4 @@ export default {
 </script>
 
 <style>
-.cabecalho {
-  /* position: relative;
-  left: 100px;
-  top: -10rem; */
-}
 </style>

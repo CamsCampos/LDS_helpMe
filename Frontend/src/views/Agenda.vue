@@ -1,16 +1,27 @@
 <template>
-  <!-- eslint-disable vue/no-use-v-if-with-v-for,vue/no-confusing-v-for-v-if -->
   <div class="fundoBranco">
     <div id="cabecalho-degrade">
       <div class="container">
-        <p class="fonteTitulo">Agenda do Aluno</p>
-        <p>Aqui está sua agenda:</p>
+        <p class="fonteTitulo">Agenda</p>
+        <b-row>
+          <b-col>
+            <p>Aqui está sua agenda:</p>
+          </b-col>
+          <b-col cols="auto">
+            <p>
+              <b-button @click="toPerfil" class="mr-1">
+                Acessar perfil
+              </b-button>
+              <b-button @click="toCadastroAula"> Cadastrar aula </b-button>
+            </p>
+          </b-col>
+        </b-row>
       </div>
     </div>
     <b-container>
       <section class="quadrado">
         <div class="conteudo">
-          <b-row>
+          <b-row v-show="permissao == 2 ? true : false">
             <b-col>
               <label for="example-datepicker">Matéria:</label>
               <b-form-select
@@ -24,55 +35,119 @@
             <b-col>
               <h2 class="mt-2">Aulas agendadas</h2>
               <hr />
-              <div
-                v-for="(item, id) in agendamentos"
-                :key="id"
-                v-show="item.aula_horario.aula.materia == selected"
-              >
-                <h4>{{ item.aula_horario.aula.materia }}</h4>
-                <b-row class="ml-3">
-                  <b-col class="espessuraFonte">
-                    <p>
-                      <strong>Professor: </strong>
-                      {{ item.professor.pessoa.nome }}
-                    </p>
-                    <p>
-                      <strong>Valor: </strong> R${{
-                        item.aula_horario.aula.custo_hora_aula
-                      }}
-                    </p>
-                    <p><strong>Horários marcados:</strong></p>
-                  </b-col>
-                  <b-col class="sublinhado">
-                    <a href=""> Ver perfil </a>
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col>
-                    <div>
-                      <table class="ml-5" style="width: 90%">
-                        <tr style="background: #fff">
-                          <th>Data</th>
-                          <th>Horário início</th>
-                          <th>Horário fim</th>
-                          <th>Modificar</th>
-                        </tr>
-                        <tr>
-                          <td>{{ item.aula_horario.horario.dia }}</td>
-                          <td>
-                            {{ item.aula_horario.horario.horario_inicio }}
-                          </td>
-                          <td>{{ item.aula_horario.horario.horario_fim }}</td>
-                          <td>
-                            <b-button @click="cancelar">Cancelar</b-button>
-                            <!-- <button class="ml-2">Reagendar</button> -->
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                  </b-col>
-                </b-row>
-                <hr />
+              <div v-if="permissao == 1">
+                <div v-for="(item, id) in agendamentos" :key="id">
+                  <!-- v-show="item.aula_horario.aula.materia == selected" -->
+                  <h4>{{ item.aula_horario.aula.materia }}</h4>
+                  <b-row class="ml-3">
+                    <b-col class="espessuraFonte">
+                      <p>
+                        <strong>Professor: </strong>
+                        {{ item.professor.pessoa.nome }}
+                      </p>
+                      <p>
+                        <strong>Valor: </strong> R${{
+                          item.aula_horario.aula.custo_hora_aula
+                        }}
+                      </p>
+                      <p><strong>Horários marcados:</strong></p>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <div>
+                        <table class="ml-5" style="width: 90%">
+                          <tr style="background: #fff">
+                            <th>Data</th>
+                            <th>Horário início</th>
+                            <th>Horário fim</th>
+                            <th>Modificar</th>
+                          </tr>
+                          <tr>
+                            <td>{{ item.aula_horario.horario.dia }}</td>
+                            <td>
+                              {{ item.aula_horario.horario.horario_inicio }}
+                            </td>
+                            <td>{{ item.aula_horario.horario.horario_fim }}</td>
+                            <td>
+                              <b-button @click="confirmacaoCancelar">
+                                Cancelar
+                              </b-button>
+                              <b-button
+                                class="ml-1"
+                                variant="success"
+                                @click="toForum"
+                              >
+                                Abrir fórum
+                              </b-button>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </b-col>
+                  </b-row>
+                  <hr />
+                </div>
+              </div>
+              <div v-else>
+                <div
+                  v-for="(item, id) in agendamentos"
+                  :key="id"
+                  v-show="item.aula_horario.aula.materia == selected"
+                >
+                  <h4>{{ item.aula_horario.aula.materia }}</h4>
+                  <b-row class="ml-3">
+                    <b-col class="espessuraFonte">
+                      <p>
+                        <strong>Professor: </strong>
+                        {{ item.professor.pessoa.nome }}
+                      </p>
+                      <p>
+                        <strong>Valor: </strong> R${{
+                          item.aula_horario.aula.custo_hora_aula
+                        }}
+                      </p>
+                      <p><strong>Horários marcados:</strong></p>
+                    </b-col>
+                    <!-- <b-col class="sublinhado">
+                    <a @click="toPerfilProf"> Ver perfil </a>
+                  </b-col> -->
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <div>
+                        <table class="ml-5" style="width: 90%">
+                          <tr style="background: #fff">
+                            <th>Data</th>
+                            <th>Horário início</th>
+                            <th>Horário fim</th>
+                            <th>Modificar</th>
+                          </tr>
+                          <tr>
+                            <td>{{ item.aula_horario.horario.dia }}</td>
+                            <td>
+                              {{ item.aula_horario.horario.horario_inicio }}
+                            </td>
+                            <td>{{ item.aula_horario.horario.horario_fim }}</td>
+                            <td>
+                              <b-button @click="confirmacaoCancelar">
+                                Cancelar
+                              </b-button>
+                              <b-button
+                                class="ml-1"
+                                variant="success"
+                                @click="toForum"
+                              >
+                                Abrir fórum
+                              </b-button>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </b-col>
+                  </b-row>
+                  <hr />
+                </div>
               </div>
             </b-col>
           </b-row>
@@ -99,12 +174,25 @@ export default {
       valor: "40,00",
       aulaHorarios: [],
       agendamentos: [],
+      permissao: localStorage.getItem("permissao"),
     };
   },
   methods: {
+    confirmacaoCancelar() {
+      this.boxOne = "";
+      this.$bvModal
+        .msgBoxConfirm("Deseja confirmar o cancelamento?")
+        .then((value) => {
+          this.boxOne = value;
+          this.cancelar();
+        })
+        .catch((err) => {
+          console.warn("Erro: " + err);
+        });
+    },
     cancelar() {
       this.$http
-        .delete(`agendamentos/professores/${1}/${4}`)
+        .delete(`agendamentos/alunos/${1}/${1}`)
         .then((response) => {
           console.log("Deletado: " + response.data);
         })
@@ -112,14 +200,22 @@ export default {
           console.warn("Erro: " + error);
         });
     },
+    toPerfil() {
+      this.$router.push("/perfil");
+    },
+    toCadastroAula() {
+      this.$router.push("/cadastro-aula");
+    },
+    toForum() {
+      this.$router.push(`/forum/${1}`);
+    },
   },
   mounted() {
     this.$http.get("/aulaHorarios").then((response) => {
       this.aulaHorarios = response.data;
     });
-
     // *** Ficar atendo para mudar o id do aluno ***
-    this.$http.get(`/agendamentos/alunos/${1}`).then((response) => {
+    this.$http.get(`/agendamentos/alunos/1`).then((response) => {
       this.agendamentos = response.data;
     });
   },
@@ -207,7 +303,6 @@ export default {
 .fonteTitulo {
   font-size: 50px;
   font-weight: 400;
-  /* margin-bottom: 0; */
 }
 
 .testeCardPadding {

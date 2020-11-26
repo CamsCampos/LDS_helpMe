@@ -1,123 +1,100 @@
 <template>
-  <div id="principal">
-    <div class="card">
-      <div class="card-image"></div>
-      <div class="card-text">
-        <span class="date">4 days ago</span>
-        <h2>Post One</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, Ducimus, repudiandae
-          temporibus omnis illum maxime quod deserunt eligendi dolor
+  <div>
+    <b-card
+      img-alt="Image"
+      img-top
+      class="cardRedondo"
+      v-for="(item, id) in aulaHorarios"
+      :key="id"
+      v-show="item.aula.materia == materiaSelecionada"
+    >
+      <div class="text-center">
+        <img
+          class="posicaoElipse"
+          src="../../../public/img/elipseFaceBackground.svg"
+          alt="elipse"
+        />
+        <b-img
+          rounded="circle"
+          src="https://placekitten.com/96/139"
+          img-alt="Card image"
+          class="imagemCard"
+        ></b-img>
+        <h4 class="mb-5" variant="secondary">
+          {{ item.aula.professor.pessoa.nome }}
+        </h4>
+      </div>
+      <b-card-text>
+        <b-row class="text-left mt-3 mb-4 text-center">
+          <b-col>
+            <b-icon icon="book" scale="1.8" variant="primary"></b-icon>
+            <p class="mt-0 espessuraFonte">
+              {{ item.aula.materia }}
+            </p>
+          </b-col>
+          <b-col>
+            <b-icon icon="cash" scale="1.8" variant="success"></b-icon>
+            <p class="mt-0 espessuraFonte">R${{ item.aula.custo_hora_aula }}</p>
+          </b-col>
+        </b-row>
+
+        <p class="lead">
+          <strong> Horários disponíveis</strong>
         </p>
-      </div>
-      <div class="card-stats">
-        <div class="stat">
-          <div class="value">4<sup>m</sup></div>
-          <div class="type">read</div>
-        </div>
-        <div class="stat border">
-          <div class="value">5123</div>
-          <div class="type">views</div>
-        </div>
-        <div class="stat">
-          <div class="value">32</div>
-          <div class="type">comments</div>
-        </div>
-      </div>
-    </div>
+
+        <table class="corTabelaCard tableCardResultRadius" style="width: 100%">
+          <tr class="th">
+            <th class="strong">Data</th>
+            <th class="strong">Início</th>
+            <th class="strong">Fim</th>
+          </tr>
+          <tr>
+            <td>{{ item.horario.dia }}</td>
+            <td>{{ item.horario.horario_inicio }}</td>
+            <td>{{ item.horario.horario_fim }}</td>
+          </tr>
+        </table>
+      </b-card-text>
+      <b-button href="#" class="btnCard" @click="agendarAula">
+        Agendar
+      </b-button>
+    </b-card>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["materiaSelecionada"],
+  data() {
+    return {
+      aulaHorarios: [],
+      title: "",
+    };
+  },
+  methods: {
+    agendarAula() {
+      this.$http
+        // *** Ficar atento para mudar o id do aluno ***
+        .post(`/agendamentos/alunos/1`, {
+          // *** Ficar atento para mudar o índice de aulaHorarios ***
+          id_aula_horarios: this.aulaHorarios[0].id,
+        })
+        .then((response) => {
+          console.log("Sucesso: " + response.data);
+        })
+        .catch((error) => {
+          console.warn("Erro: " + error);
+        });
+    },
+  },
+  mounted() {
+    this.$http.get("/aulaHorarios").then((response) => {
+      this.aulaHorarios = response.data;
+    });
+  },
+};
 </script>
 
-<style scoped>
-#principal {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* background: url("background.jpg"); */
-  overflow: hidden;
-}
-.card {
-  display: grid;
-  grid-template-columns: 300px;
-  grid-template-rows: 210px 210px 80px;
-  grid-template-areas: "image" "text" "stats";
-
-  border-radius: 18px;
-  background: white;
-  /* box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9); */
-  font-family: roboto;
-  text-align: center;
-
-  transition: 0.5s ease;
-  cursor: pointer;
-  margin: 30px;
-}
-.card-image {
-  grid-area: image;
-  background: url("http://placekitten.com/g/200/300");
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  background-size: cover;
-}
-
-.card-text {
-  grid-area: text;
-  margin: 25px;
-}
-.card-text .date {
-  color: rgb(255, 7, 110);
-  font-size: 13px;
-}
-.card-text p {
-  color: grey;
-  font-size: 15px;
-  font-weight: 300;
-}
-.card-text h2 {
-  margin-top: 0px;
-  font-size: 28px;
-}
-.card-stats {
-  grid-area: stats;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  background: rgb(255, 7, 110);
-}
-.card-stats .stat {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: white;
-}
-.card-stats .border {
-  border-left: 1px solid rgb(172, 26, 87);
-  border-right: 1px solid rgb(172, 26, 87);
-}
-.card-stats .value {
-  font-size: 22px;
-  font-weight: 500;
-}
-.card-stats .value sup {
-  font-size: 12px;
-}
-.card-stats .type {
-  font-size: 11px;
-  font-weight: 300;
-  text-transform: uppercase;
-}
-.card:hover {
-  transform: scale(1.15);
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
-}
+<style>
+@import "../../style/cards.css";
 </style>
