@@ -19,3 +19,7 @@ Desenvolvimento de uma aplicação web que dará suporte para professores oferec
 >yarn sequelize db:migrate:undo:all
 
 > **Observação:** esse comando deve ser executado para excluir as tabelas sempre que alguma alteração estrutural for realizada no banco. Para recriá-las, execute novamente o comando de criação
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev

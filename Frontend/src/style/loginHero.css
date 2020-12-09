@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sriracha&display=swap");
+
+.grid-box-picture {
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.grid-box-picturebox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backgroundDegrade {
+  background: linear-gradient(180deg, #031d44 25.52%, #025f53 100%);
+  opacity: 0.9;
+  border-radius: 2px;
+  height: 100vh;
+  backdrop-filter: blur(2px);
+}
+
+.borda {
+  border: 1px solid white;
+  margin-left: 1rem;
+}
+
+.innerContainer {
+  position: absolute;
+  top: 50%;
+  height: 10em;
+  margin-top: -15em;
+}
+
+.textoEsquerda {
+  color: white;
+  font-family: "Major Mono Display", monospace;
+  font-size: 80px;
+  margin: 10px 50px;
+}
+
+.textoDireita {
+  color: white;
+  font-family: "Sriracha", cursive;
+  font-size: 80px;
+}
+
+.containerVerticalExterno {
+  position: relative;
+}
+.containerVerticalInterno {
+  position: absolute;
+  width: 70%;
+  top: 8%;
+  height: 10em;
+  margin-top: 17.5em;
+  margin-left: 4rem;
+}
+
+.btnLogin {
+  width: 100%;
+  background-color: #e9e9e9;
+  color: black;
+}
+
+.btnLogin:hover {
+  background-color: #a8a8a8;
+}
+
+.btnRegistrar {
+  width: 100%;
+  background-color: transparent;
+}
+
+.inputsLogin {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  border-radius: 0;
+  color: white;
+}
+
+.inputsLogin:focus {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: white;
+}

@@ -1,0 +1,63 @@
+.grid-box-picture {
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.grid-box-picturebox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.backgroundDegrade {
+  background: linear-gradient(180deg, #031d44 25.52%, #025f53 100%);
+  opacity: 0.9;
+  border-radius: 2px;
+  height: 100vh;
+}
+
+.titulo {
+  color: white;
+  font-size: 4.5em;
+  font-weight: 300;
+}
+
+fieldset {
+  margin-left: 16rem;
+  margin-right: 16rem;
+  color: white;
+}
+
+.box {
+  position: relative;
+}
+
+.boxVerticalAlignment {
+  position: absolute;
+  margin-top: 11rem;
+  width: 100%;
+}
+
+.bordaFundo {
+  border: 1px solid white;
+  border-radius: 4px;
+  background: #ffffff1a;
+  padding: 30px;
+}
+
+.textoRodape {
+  color: white;
+  cursor: pointer;
+}
+
+.verticalVoltarLoginRelativo {
+  position: relative;
+}
+.verticalVoltarLoginRelativo {
+  position: absolute;
+  margin-top: 45rem;
+}
